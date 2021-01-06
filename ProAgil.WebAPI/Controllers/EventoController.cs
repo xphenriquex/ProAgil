@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -32,11 +33,11 @@ namespace ProAgil.WebAPI.Controllers
         }
 
         [HttpGet("{eventId}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> Get(int eventId)
         {
             try
             {
-                var result = await _repo.GetAllEventoAsyncById(id);
+                var result = await _repo.GetAllEventoAsyncById(eventId);
                 return Ok(result);
             }
             catch (System.Exception)
@@ -82,7 +83,7 @@ namespace ProAgil.WebAPI.Controllers
             return BadRequest();
         }
 
-        [HttpPut]
+        [HttpPut("{eventId}")]
         public async Task<IActionResult> Put(int eventId, Evento model)
         {
             try
@@ -106,7 +107,7 @@ namespace ProAgil.WebAPI.Controllers
             return BadRequest();
         }
 
-        [HttpDelete]
+        [HttpDelete("{eventId}")]
         public async Task<IActionResult> Delete(int eventId)
         {
             try
