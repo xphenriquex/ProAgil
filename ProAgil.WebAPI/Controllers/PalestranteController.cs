@@ -22,7 +22,7 @@ namespace ProAgil.WebAPI.Controllers
         {
             try
             {
-                var result = await _repo.GetAllPalestranteAsyncById(id);
+                var result = await _repo.GetPalestranteAsyncById(id);
                 return Ok(result);
             }
             catch (System.Exception)
@@ -37,7 +37,7 @@ namespace ProAgil.WebAPI.Controllers
         {
             try
             {
-                var result = await _repo.GetAllPalestranteAsyncByName(name, true);
+                var result = await _repo.GetPalestranteAsyncByName(name, true);
                 return Ok(result);
             }
             catch (System.Exception)
@@ -73,7 +73,7 @@ namespace ProAgil.WebAPI.Controllers
         {
             try
             {
-                var palestrante = await _repo.GetAllPalestranteAsyncById(palestranteId);
+                var palestrante = await _repo.GetPalestranteAsyncById(palestranteId);
                 if (palestrante == null) return NotFound();
 
                 _repo.Update(model);
@@ -97,7 +97,7 @@ namespace ProAgil.WebAPI.Controllers
         {
             try
             {
-                var evento = await _repo.GetAllEventoAsyncById(palestranteId);
+                var evento = await _repo.GetEventoAsyncById(palestranteId);
                 if (evento == null) return NotFound();
 
                 _repo.Delete(evento);

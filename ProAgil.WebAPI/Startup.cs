@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using ProAgil.Repository;
+using ProAgil.WebAPI.Helpers;
 
 namespace ProAgil.WebAPI
 {
@@ -31,6 +33,7 @@ namespace ProAgil.WebAPI
                 x.UseSqlite(Configuration.GetConnectionString("DefaultConnection"))
             );
             services.AddScoped<IProAgilRepository, ProAgilRepository>();
+            services.AddAutoMapper(cfg => cfg.AddProfile<AutoMapperProfile>());
             services.AddControllers();
             services.AddCors();
         }

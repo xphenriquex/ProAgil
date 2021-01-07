@@ -49,13 +49,13 @@ namespace ProAgil.Repository
 
             query = query
                 .AsNoTracking()
-                .OrderByDescending(c => c.DataEvento);
+                .OrderBy(c => c.Id);
 
             return await query.ToArrayAsync();
         }
 
 
-        public async Task<Evento> GetAllEventoAsyncById(int eventoId, bool includesPalestrantes = false)
+        public async Task<Evento> GetEventoAsyncById(int eventoId, bool includesPalestrantes = false)
         {
             IQueryable<Evento> query = _context.Eventos
                 .Include(c => c.Lotes)
@@ -70,13 +70,13 @@ namespace ProAgil.Repository
 
             query = query
                 .AsNoTracking()
-                .OrderByDescending(c => c.DataEvento)
+                .OrderBy(c => c.Id)
                 .Where(c => c.Id == eventoId);
 
             return await query.FirstOrDefaultAsync();
         }
 
-        public async Task<Evento[]> GetAllEventosAsyncByTema(string tema, bool includesPalestrantes = false)
+        public async Task<Evento[]> GetEventosAsyncByTema(string tema, bool includesPalestrantes = false)
         {
             IQueryable<Evento> query = _context.Eventos
                 .Include(c => c.Lotes)
@@ -97,7 +97,7 @@ namespace ProAgil.Repository
             return await query.ToArrayAsync();
         }
 
-        public async Task<Palestrante> GetAllPalestranteAsyncById(int palestranteId, bool includesEventos = false)
+        public async Task<Palestrante> GetPalestranteAsyncById(int palestranteId, bool includesEventos = false)
         {
             IQueryable<Palestrante> query = _context.Palestrantes
                 .Include(c => c.RedeSociais);
@@ -117,7 +117,7 @@ namespace ProAgil.Repository
             return await query.FirstOrDefaultAsync();
         }
 
-        public async Task<Palestrante[]> GetAllPalestranteAsyncByName(string nome, bool includesEventos = false)
+        public async Task<Palestrante[]> GetPalestranteAsyncByName(string nome, bool includesEventos = false)
         {
             IQueryable<Palestrante> query = _context.Palestrantes
                 .Include(c => c.RedeSociais);

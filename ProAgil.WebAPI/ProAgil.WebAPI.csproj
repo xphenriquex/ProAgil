@@ -6,4 +6,7 @@
     <ProjectReference Include="..\ProAgil.Domain\ProAgil.Domain.csproj"/>
     <ProjectReference Include="..\ProAgil.Repository\ProAgil.Repository.csproj"/>
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0"/>
+  </ItemGroup>
 </Project>
