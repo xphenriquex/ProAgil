@@ -1,3 +1,4 @@
+<app-titulo [titulo]="titulo"></app-titulo>
 <div class="d-flex">
 
   <div class="form-inline mr-auto">
@@ -45,7 +46,7 @@
       <td>{{evento.id}}</td>
       <td>{{evento.tema}}</td>
       <td>{{evento.local}}</td>
-      <td>{{evento.dataEvento | DateTimeFormatPipe}}</td>
+      <td>{{evento.dataEvento}}</td>
       <td>{{evento.qtdPessoas}}</td>
       <td>
         <div *ngIf="!evento.lotes.length"> Não informado </div>
@@ -63,7 +64,7 @@
       </td>
     </tr>
   </tbody>
-  <tfoot *ngIf="!eventos.length">
+  <tfoot *ngIf="!eventos">
     <tr>
       <td colspan="7" class="text-center">
         <h4>Nenhum evento encontrado!</h4>
@@ -111,7 +112,9 @@
             </div>
             <div class="form-group col-md-4">
               <label>Data e Hora</label>
-              <input type="text" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY hh:mm a' }"
+              <input type="text"
+                bsDatepicker
+                [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY HH:mm' }"
                 class="form-control is-invalid" formControlName="dataEvento" placeholder="Insira a data"
                 [ngClass]="{ 'is-invalid': registerForm.get('dataEvento').errors &&  registerForm.get('dataEvento').touched }">
               <div class="invalid-feedback" *ngIf="registerForm.get('dataEvento').getError('required')">
