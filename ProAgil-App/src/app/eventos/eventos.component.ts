@@ -29,7 +29,12 @@ export class EventosComponent implements OnInit {
   registerForm: FormGroup;
   bodyDeletarEvento = '';
 
+  file: File;
+  fieNameToUpdate: string;
+
+  // tslint:disable-next-line: variable-name
   private _filtroLista: string;
+  dataAtual: string;
 
   constructor(
     private eventoService: EventoService,
@@ -68,27 +73,65 @@ export class EventosComponent implements OnInit {
     this.openModal(template);
   }
 
-  editarEvento(template: any, evento: Evento){
+  editarEvento(template: any, evento: Evento) {
     this.modoSalvar = 'put';
     this.openModal(template);
-    this.evento = evento;
+    this.evento = Object.assign({}, evento);
+    this.fieNameToUpdate = this.evento.imagemURL.toString();
+    this.evento.imagemURL = '';
     this.registerForm.patchValue(this.evento);
   }
 
+  onFileChange(event) {
+    const fileReader = new FileReader();
+
+    if (event.target.files && event.target.files.length) {
+      this.file = event.target.files;
+      console.log(this.file);
+    }
+  }
+
+
   salvarAlteracao(template: any) {
-    if(this.registerForm.valid) {
-      if(this.modoSalvar === 'post') {
-        this.criarEvento(template)
-      }else {
+    if (this.registerForm.valid) {
+      if (this.modoSalvar === 'post') {
+        this.criarEvento(template);
+      } else {
         this.atualizarEvento(template);
       }
 
     }
   }
 
+  uploadImage() {
+    if (this.modoSalvar === 'post') {
+      const nomeArquivo = this.evento.imagemURL.split('\\', 3);
+      this.evento.imagemURL = nomeArquivo[2];
+      this.eventoService.postUpload(this.file, nomeArquivo[2])
+        .subscribe(
+          () => {
+            this.dataAtual = new Date().getMilliseconds().toString();
+            this.getEventos();
+          }
+      );
+    } else {
+      this.evento.imagemURL = this.fieNameToUpdate;
+      this.eventoService.postUpload(this.file, this.fieNameToUpdate)
+        .subscribe(
+          () => {
+            this.dataAtual = new Date().getMilliseconds().toString();
+            this.getEventos();
+          }
+      );
+
+    }
+  }
+
   criarEvento(template: any) {
     this.evento = Object.assign({}, this.registerForm.value);
-     this.eventoService.postEvento(this.evento).subscribe(
+    this.uploadImage();
+
+    this.eventoService.postEvento(this.evento).subscribe(
         (novoEvento: Evento) => {
           console.log(novoEvento);
           template.hide();
@@ -103,6 +146,8 @@ export class EventosComponent implements OnInit {
 
   atualizarEvento(template) {
     this.evento = Object.assign({id: this.evento.id}, this.registerForm.value);
+    this.uploadImage();
+
     this.eventoService.putEvento(this.evento).subscribe(
       (novoEvento: Evento) => {
         console.log(novoEvento);
@@ -155,8 +200,8 @@ export class EventosComponent implements OnInit {
 
   getEventos() {
     this.eventoService.getAllEvento().subscribe(
-      (_eventos: Evento[]) => {
-      this.eventos = _eventos;
+      (eventos: Evento[]) => {
+      this.eventos = eventos;
       this.eventoFiltrados = this.eventos;
     }, error => {
       this.toastr.error(`Erro ao tentar Carregar eventos: ${error}`);
