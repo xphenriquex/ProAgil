@@ -87,7 +87,6 @@ export class EventosComponent implements OnInit {
 
     if (event.target.files && event.target.files.length) {
       this.file = event.target.files;
-      console.log(this.file);
     }
   }
 
