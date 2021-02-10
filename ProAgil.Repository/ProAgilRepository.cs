@@ -29,6 +29,11 @@ namespace ProAgil.Repository
             _context.Remove(entity);
         }
 
+         public void DeleteRange<T>(T[] entityArray) where T : class
+        {
+            _context.RemoveRange(entityArray);
+        }
+
          public async Task<bool> SaveChangesAsync()
         {
             return (await _context.SaveChangesAsync()) > 0;
@@ -38,7 +43,7 @@ namespace ProAgil.Repository
         {
             IQueryable<Evento> query = _context.Eventos
                 .Include(c => c.Lotes)
-                .Include(c => c.RedeSociais);
+                .Include(c => c.RedesSociais);
             
             if(includesPalestrantes)
             {
@@ -59,7 +64,7 @@ namespace ProAgil.Repository
         {
             IQueryable<Evento> query = _context.Eventos
                 .Include(c => c.Lotes)
-                .Include(c => c.RedeSociais);
+                .Include(c => c.RedesSociais);
             
             if(includesPalestrantes)
             {
@@ -80,7 +85,7 @@ namespace ProAgil.Repository
         {
             IQueryable<Evento> query = _context.Eventos
                 .Include(c => c.Lotes)
-                .Include(c => c.RedeSociais);
+                .Include(c => c.RedesSociais);
             
             if(includesPalestrantes)
             {
@@ -100,7 +105,7 @@ namespace ProAgil.Repository
         public async Task<Palestrante> GetPalestranteAsyncById(int palestranteId, bool includesEventos = false)
         {
             IQueryable<Palestrante> query = _context.Palestrantes
-                .Include(c => c.RedeSociais);
+                .Include(c => c.RedesSociais);
             
             if(includesEventos)
             {
@@ -120,7 +125,7 @@ namespace ProAgil.Repository
         public async Task<Palestrante[]> GetPalestranteAsyncByName(string nome, bool includesEventos = false)
         {
             IQueryable<Palestrante> query = _context.Palestrantes
-                .Include(c => c.RedeSociais);
+                .Include(c => c.RedesSociais);
             
             if(includesEventos)
             {

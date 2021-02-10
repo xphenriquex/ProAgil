@@ -19,8 +19,8 @@ export class LoginComponent implements OnInit {
     public router: Router) { }
 
   ngOnInit() {
-    if (localStorage.getItem('token') !== null) {
-      this.router.navigate(['dashboard']);
+    if (localStorage.getItem('token') != null) {
+      this.router.navigate(['/dashboard']);
     }
   }
 
@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.model)
       .subscribe(
         () => {
-          this.router.navigate(['dashboard']);
+          this.router.navigate(['/dashboard']);
         },
         error => {
           this.toastr.error('Falha ao tentar logar');

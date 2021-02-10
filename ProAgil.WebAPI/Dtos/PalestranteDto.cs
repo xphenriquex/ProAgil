@@ -10,7 +10,7 @@ namespace ProAgil.WebAPI.Dtos
         public string Imagem { get; set; }
         public string Telefone { get; set; }
         public string Email { get; set; }
-        public List<RedeSocialDto> RedeSociais { get; set; }
+        public List<RedeSocialDto> RedesSociais { get; set; }
         public List<EventoDto> Eventos { get; set; }
     }
 }
